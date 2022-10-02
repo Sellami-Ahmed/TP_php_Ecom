@@ -58,6 +58,7 @@
 
 		.signin-form .form-group {
 			margin-bottom: 20px;
+			
 		}
 
 		.signin-form .btn {
@@ -66,27 +67,15 @@
 			font-weight: bold;
 			text-align: center;
 			background: #5c6ac4;
+			border-color: #507cc0;
+			
+		}
+		.signin-form .btn:hover{
+			background-color: #507cc0;
 		}
 
 		.signin-form .small {
 			font-size: 13px;
-		}
-
-		.btn-success {
-			--bs-btn-color: #fff;
-			--bs-btn-bg: #5c6ac4;
-			--bs-btn-border-color: #5c6ac4;
-			--bs-btn-hover-color: #fff;
-			--bs-btn-hover-bg: #5c6ac4;
-			--bs-btn-hover-border-color: #5c6ac4;
-			--bs-btn-focus-shadow-rgb: 60, 153, 110;
-			--bs-btn-active-color: #fff;
-			--bs-btn-active-bg: #5c6ac4;
-			--bs-btn-active-border-color: #5c6ac4;
-			--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-			--bs-btn-disabled-color: #fff;
-			--bs-btn-disabled-bg: #5c6ac4;
-			--bs-btn-disabled-border-color: #5c6ac4;
 		}
 
 		.signin-btn:hover {

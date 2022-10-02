@@ -26,11 +26,11 @@
 <body>
 
   <?php
-  include("inc/header.php");
+  include("inc/header2.php");
   ?>
 
   <?php
-  include("inc/tab.php");
+  include("inc/login.php");
   ?>
   <?php
   include("inc/footer.php");
