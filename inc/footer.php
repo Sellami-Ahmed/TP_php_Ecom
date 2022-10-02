@@ -38,8 +38,8 @@
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <p>
-Lo7.Tech is a futur company that develops people brains that can replace humain brain 
-and it would be better if you use your own brain instead of other brain. 
+              Lo7.Tech is a futur company that develops people brains that can replace humain brain
+              and it would be better if you use your own brain instead of other brain.
             </p>
           </div>
         </div>

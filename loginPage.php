@@ -1,22 +1,20 @@
 <?php
-			session_start();
-			if (isset($_POST['username']) && isset($_POST['password'])) {
-				$uname = $_POST['username'];
-				$pass = $_POST['password'];
-				if ($uname == 'lo7' && $pass == '123') {
-					$msg = '<div class="alert alert-success text-center"" role="alert">
+session_start();
+if (isset($_POST['username']) && isset($_POST['password'])) {
+	$uname = $_POST['username'];
+	$pass = $_POST['password'];
+	if ($uname == 'lo7' && $pass == '123') {
+		$msg = '<div class="alert alert-success text-center"" role="alert">
 Login success
 </div>';
-header("Location:crudProduit.php");
-				} else {
-					$msg = '<div class="alert alert-danger text-center"" role="alert">
+		header("Location:crudProduit.php");
+	} else {
+		$msg = '<div class="alert alert-danger text-center"" role="alert">
 Wrong username or password
 </div>';
-				}
-
-				
-			}
-			?>
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -163,9 +161,9 @@ Wrong username or password
 			font-size: 20px;
 		}
 	</style>
-	  <?php
-  include("inc/loginHeader.php");
-  ?>
+	<?php
+	include("inc/loginHeader.php");
+	?>
 </head>
 
 <body>
@@ -194,10 +192,10 @@ Wrong username or password
 		<div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
 	</div>
 	<footer>
-  <?php
-  include("inc/footer.php");
-  ?>
-  </footer>
+		<?php
+		include("inc/footer.php");
+		?>
+	</footer>
 </body>
 
 </html>
