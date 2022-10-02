@@ -1,3 +1,22 @@
+<?php
+			session_start();
+			if (isset($_POST['username']) && isset($_POST['password'])) {
+				$uname = $_POST['username'];
+				$pass = $_POST['password'];
+				if ($uname == 'lo7' && $pass == '123') {
+					$msg = '<div class="alert alert-success text-center"" role="alert">
+Login success
+</div>';
+header("Location:crudProduit.php");
+				} else {
+					$msg = '<div class="alert alert-danger text-center"" role="alert">
+Wrong username or password
+</div>';
+				}
+
+				
+			}
+			?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +77,7 @@
 
 		.signin-form .form-group {
 			margin-bottom: 20px;
-			
+
 		}
 
 		.signin-form .btn {
@@ -68,9 +87,10 @@
 			text-align: center;
 			background: #5c6ac4;
 			border-color: #507cc0;
-			
+
 		}
-		.signin-form .btn:hover{
+
+		.signin-form .btn:hover {
 			background-color: #507cc0;
 		}
 
@@ -143,11 +163,14 @@
 			font-size: 20px;
 		}
 	</style>
+	  <?php
+  include("inc/loginHeader.php");
+  ?>
 </head>
 
 <body>
 	<div class="signin-form">
-		<form action="/examples/actions/confirmation.php" method="post">
+		<form action="loginPage.php" method="post">
 			<h2>Sign in</h2>
 			<p class="hint-text">Sign in with your social media account</p>
 			<div class="social-btn text-center">
@@ -156,6 +179,7 @@
 				<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
 			</div>
 			<div class="or-seperator"><b>or</b></div>
+			<?php echo $msg; ?>
 			<div class="form-group">
 				<input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
 			</div>
@@ -169,6 +193,11 @@
 		</form>
 		<div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
 	</div>
+	<footer>
+  <?php
+  include("inc/footer.php");
+  ?>
+  </footer>
 </body>
 
 </html>
