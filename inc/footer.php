@@ -49,35 +49,29 @@ and it would be better if you use your own brain instead of other brain.
       <!-- Section: Social -->
       <section class="text-center mb-5">
         <a href="" class="text-white me-4">
-          <i class="fab fa-facebook-f"></i>
+          <i class="fa fa-facebook-f"></i>
         </a>
         <a href="" class="text-white me-4">
-          <i class="fab fa-twitter"></i>
+          <i class="fa fa-twitter"></i>
         </a>
         <a href="" class="text-white me-4">
-          <i class="fab fa-google"></i>
+          <i class="fa fa-google"></i>
         </a>
         <a href="" class="text-white me-4">
-          <i class="fab fa-instagram"></i>
+          <i class="fa fa-instagram"></i>
         </a>
         <a href="" class="text-white me-4">
-          <i class="fab fa-linkedin"></i>
+          <i class="fa fa-linkedin"></i>
         </a>
         <a href="" class="text-white me-4">
-          <i class="fab fa-github"></i>
+          <i class="fa fa-github"></i>
         </a>
       </section>
-      <!-- Section: Social -->
     </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
       © 2020 Copyright:
       <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
-    <!-- Copyright -->
   </footer>
-  <!-- Footer -->
+
 </div>
-<!-- End of .container -->
