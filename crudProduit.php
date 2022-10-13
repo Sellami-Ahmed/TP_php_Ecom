@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.101.0">
-  <title>Starter Template · Bootstrap v5.2</title>
+  <title>Lo7.Tech</title>
 
   <link rel="canonical" href="inc/css/starter-template">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
