@@ -1,17 +1,18 @@
 <?php
 session_start();
+
+$logins = array('ahmed' => '123','username1' => 'password1','username2' => 'password2');
+$Username = isset($_POST['username']) ? $_POST['username'] : '';
+$Password = isset($_POST['password']) ? $_POST['password'] : '';
 if (isset($_POST['username']) && isset($_POST['password'])) {
 	$uname = $_POST['username'];
 	$pass = $_POST['password'];
-	if ($uname == 'lo7' && $pass == '123') {
-		$msg = '<div class="alert alert-success text-center"" role="alert">
-Login success
-</div>';
+	if (isset($logins[$Username]) && $logins[$Username] == $Password){
+		/* Success: Set session variables and redirect to Protected page  */
+		$_SESSION['UserData']['Username']=$logins[$Username];
 		header("Location:crudProduit.php");
 	} else {
-		$msg = '<div class="alert alert-danger text-center"" role="alert">
-Wrong username or password
-</div>';
+		$msg =$_SESSION['alert'];
 	}
 }
 ?>
@@ -177,13 +178,18 @@ Wrong username or password
 				<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
 			</div>
 			<div class="or-seperator"><b>or</b></div>
-			<?php echo $msg; ?>
+			<?php echo $_SESSION['alert']; ?>
 			<div class="form-group">
 				<input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
 			</div>
+			
+				<label >
+					<input type="checkbox" name="remeber"  > Remember me
+				</label>
+			
 			<div class="form-group">
 				<button type="submit" class="btn btn-success btn-lg btn-block signin-btn">Sign in</button>
 			</div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -215,7 +216,7 @@
             <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile setting</a></a>
             <a href="#" class="dropdown-item"><i class="fa fa-history"></i> Commands history</a></a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></a>
+            <a href="logout.php" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></a>
           </div>
         </div>
       </div>
