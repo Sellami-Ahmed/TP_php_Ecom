@@ -10,9 +10,19 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 	if (isset($logins[$Username]) && $logins[$Username] == $Password){
 		/* Success: Set session variables and redirect to Protected page  */
 		$_SESSION['UserData']['Username']=$logins[$Username];
+		if(!empty($_POST["remember"])) {
+			setcookie ("username",$uname,time()+ 3600);
+			setcookie ("password",$pass,time()+ 3600);}
+			else {
+				setcookie("username","");
+				setcookie("password","");}
+			
 		header("Location:crudProduit.php");
-	} else {
-		$msg =$_SESSION['alert'];
+	} if (!(isset($logins[$Username]) && $logins[$Username] == $Password)){
+		
+		$_SESSION['alert']='<div class="alert alert-danger text-center"" role="alert">
+unvalid user data
+</div>';
 	}
 }
 ?>
@@ -178,16 +188,18 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 				<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
 			</div>
 			<div class="or-seperator"><b>or</b></div>
-			<?php echo $_SESSION['alert']; ?>
+			<?php echo $_SESSION['alert']; 
+			unset($_SESSION['alert']);?>
 			<div class="form-group">
-				<input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
+				<input type="text" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>" class="form-control input-lg" name="username" placeholder="Username" required="required">
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
+				<input type="password"
+				value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" class="form-control input-lg" name="password" placeholder="Password" required="required">
 			</div>
 			
 				<label >
-					<input type="checkbox" name="remeber"  > Remember me
+					<input type="checkbox" name="remember"  > Remember me
 				</label>
 			
 			<div class="form-group">
