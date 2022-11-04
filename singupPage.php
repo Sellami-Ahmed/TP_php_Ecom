@@ -1,34 +1,23 @@
 <?php
 session_start();
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: crudProduit.php");
-    exit;
-}
+// Include config file
 require_once "DBconnect.php";
-$username = $password = "";
-$username_err = $password_err = $login_err = "";
+ 
+// Define variables and initialize with empty values
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Check if username is empty
+    // Validate username
     if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter username.";
+        $username_err = "Please enter a username.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
+        $username_err = "Username can only contain letters, numbers, and underscores.";
     } else{
-        $username = trim($_POST["username"]);
-    }
-    
-    // Check if password is empty
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = trim($_POST["password"]);
-    }
-    
-    // Validate credentials
-    if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = :username";
+        $sql = "SELECT id FROM users WHERE username = :username";
         
         if($stmt = $pdo->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -39,40 +28,62 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // Check if username exists, if yes then verify password
                 if($stmt->rowCount() == 1){
-                    if($row = $stmt->fetch()){
-                        $id = $row["id"];
-                        $username = $row["username"];
-                        $Rpassword = $row["password"];
-                        if($password==$Rpassword){
-                            // Password is correct, so start a new session
-                            
-                            
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            if(!empty($_POST["remember"])) {
-								setcookie ("username",$username,time()+ 3600);
-								setcookie ("password",$password,time()+ 3600);
-								
-							} else {
-								setcookie("username","");
-								setcookie("password","");
-								
-							}
-                            // Redirect user to welcome page
-                            header("location: crudProduit.php");
-                        } else{
-                            // Password is not valid, display a generic error message
-                            $login_err = "Invalid username or password.";
-                        }
-                    }
+                    $username_err = "This username is already taken.";
                 } else{
-                    // Username doesn't exist, display a generic error message
-                    $login_err = "Invalid username or password.";
+                    $username = trim($_POST["username"]);
                 }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            unset($stmt);
+        }
+    }
+    
+    // Validate password
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter a password.";     
+    } elseif(strlen(trim($_POST["password"])) < 6){
+        $password_err = "Password must have atleast 6 characters.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    // Validate confirm password
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm password.";     
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
+        if(empty($password_err) && ($password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
+        }
+    }
+    
+    // Check input errors before inserting in database
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+        
+        // Prepare an insert statement
+        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+         
+        if($stmt = $pdo->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+            $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
+            
+            // Set parameters
+            $param_username = $username;
+            $param_password =$password; // Creates a password hash
+            
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Redirect to login page
+				$_SESSION['alert']='<div class="alert alert-success text-center"" role="alert">
+Successeful Sign Up
+</div>';
+                header("location: loginPage.php");
+				
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
@@ -92,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Login page</title>
+	<title>SignUp page</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -240,37 +251,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
 	<div class="signin-form">
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-			<h2>Sign in</h2>
-			<p class="hint-text">Sign in with your social media account</p>
+			<h2>Sign Up</h2>
+			<p class="hint-text">Sign Up with your social media account</p>
 			<div class="social-btn text-center">
 				<a href="#" class="btn btn-primary btn-lg" title="Facebook"><i class="fa fa-facebook"></i></a>
 				<a href="#" class="btn btn-info btn-lg" title="Twitter"><i class="fa fa-twitter"></i></a>
 				<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
 			</div>
 			<div class="or-seperator"><b>or</b></div>
-			<?php if (!empty($login_err)){echo '<div class="alert alert-danger">' . $login_err . '</div>';}
-			if(isset($_SESSION['alert'])){echo $_SESSION['alert'];
-			unset($_SESSION['alert']); }?>
+
 			<div class="form-group">
-				<input type="text" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>" name="username" placeholder="Username" required="required"class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+				<input type="text"  name="username" placeholder="Username" required="required"
+				class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
 			</div>
 			<div class="form-group">
 				<input type="password"
-				value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" name="password" placeholder="Password" required="required"class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+				name="password"
+				placeholder="Password" required="required"
+				 class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
 			</div>
+			<div class="form-group">
+				<input type="password"
+				  name="confirm_password" placeholder="Confirm Password" required="required"
+				  class="form-control  <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+			</div>
 			
-				<label >
-					<input type="checkbox" name="remember"  > Remember me
-				</label>
+
 			
 			<div class="form-group">
-				<button type="submit" class="btn btn-success btn-lg btn-block signin-btn">Sign in</button>
+				<button type="submit" class="btn btn-success btn-lg btn-block signin-btn">submit</button>
 			</div>
-			<div class="text-center small"><a href="#">Forgot Your password?</a></div>
+
 		</form>
-		<div class="text-center small">Don't have an account? <a href="singupPage.php">Sign up</a></div>
+		<div class="text-center small">Already have an account? <a href="loginPage.php">Login here</a></div>
 	</div>
 	<footer>
 		<?php

@@ -1,4 +1,34 @@
+<?php
+session_start();
+if(!isset($_SESSION['LoggedIn'])){
+	header("location: loginPage.php");
+	$_SESSION['alert']='<div class="alert alert-danger text-center"" role="alert">
+U need to login
+</div>';
+}
+if(isset($_GET["code"]) && !empty($_GET["code"])){
+    require_once "DBconnect.php";
+    echo $_GET["code"];
+    $sql = "DELETE FROM produits WHERE code = :code";
+    
+    if($stmt = $pdo->prepare($sql)){
+        $param_code = trim($_GET["code"]);
+		$stmt->bindParam(":code", $param_code, PDO::PARAM_STR);
+        
+        
+        
+        if($stmt->execute()){
 
+            header("location: crudProduit.php");
+            exit();
+        } else{
+            echo "Oops! une erreur est survenue.";
+        }
+    }
+     
+	unset($stmt);
+	unset($pdo);
+}?>
 <!doctype html>
 <html lang="en">
 
@@ -17,7 +47,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="inc/css/bootstrap.min.css" rel="stylesheet">
   <link href="starter-template.css" rel="stylesheet">
-
+  
   <?php
   include("inc/userHeader.php");
   ?>
@@ -62,53 +92,39 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-								$products = array(
-									1 => array(
-										"name" => "Timex Unisex Originals",
-										"category" => "Watches",
-										"id" => "50545",
-										"price" => 79.00,
-										"quantity" => 10,
-										"image" => 1
-									),
-									2 => array(
-										"name" => "Lumix camera lense",
-										"category" => "Electronics",
-										"id" => "50546",
-										"price" => 79,
-										"quantity" => 9,
-										"image" => 3
-									),
-									3 => array(
-										"name" => "Gray Nike running shoe",
-										"category" => " Fashion",
-										"id" => "50547",
-										"price" => 79,
-										"quantity" => 8,
-										"image" => 2
-									)
-								);
-								foreach ($products as $product => $value) {
+								<?
+								require_once "DBconnect.php";
+								// read all row from database table
+$sql = "SELECT * FROM produits Join categories on produits.code_categorie = categories.code";
+
+$result = $pdo->query($sql);
+ if (!$result) {
+    die("Invalid query: ". $pdo->error);
+ }
+// read data of each row
+while ($row = $result->fetch(PDO::FETCH_ASSOC))  {
+	echo"<tr>
+	<th scope='row'>
+		<div class='p-2'>
+			<img src='inc/images/product-$row[code].jpg' alt='' width='70' class='img-fluid rounded shadow-sm'>
+			<div class='ml-3 d-inline-block align-middle'>
+				<h5 class='mb-0'><a href='#' class='text-dark d-inline-block'>$row[designation]</a></h5><span class='text-muted font-weight-normal font-italic'>Category: $row[name]</br>ID:$row[code]</span>
+			</div>
+		</div>
+	</th>
+	<td class='align-middle'><strong>$$row[Prix]</strong></td>
+	
+	<td class='align-middle'><input type='number' class='form-control text-center' value=$row[Quantite]><strong></strong></td>
+	<td class='align-middle'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-trash'></i></a>
+	</td>
+</tr>";
+}
+
+
+								
 								?>
-									<tr>
-										<th scope="row">
-											<div class="p-2">
-												<img src="inc/images/product-<?php echo $products[$product]["image"]; ?>.jpg" alt="" width="70" class="img-fluid rounded shadow-sm">
-												<div class="ml-3 d-inline-block align-middle">
-													<h5 class="mb-0"><a href="#" class="text-dark d-inline-block"><?php echo $products[$product]["name"]; ?></a></h5><span class="text-muted font-weight-normal font-italic">Category: <?php echo $products[$product]["category"]; ?></br>ID:<?php echo $products[$product]["id"]; ?></span>
-												</div>
-											</div>
-										</th>
-										<td class="align-middle"><strong>$<?php echo $products[$product]["price"]; ?></strong></td>
-										
-										<td class="align-middle"><input type="number" class="form-control text-center" value=<?php echo $products[$product]["quantity"]; ?>><strong></strong></td>
-										<td class="align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a>
-										</td>
-									</tr>
-								<?php
-								}
-								?>
+									
+				
 
 
 							</tbody>

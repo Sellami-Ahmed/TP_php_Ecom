@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -211,7 +213,9 @@
       <div class="navbar-nav ml-auto">
         <a href="#" class="nav-item nav-link messages"><i class="fa fa-shopping-cart"></i><span class="badge">10</span></a></a>
         <div class="nav-item dropdown">
-          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="inc/images/logo2.png" class="avatar" alt="Avatar"> Paula Wilson <b class="caret"></b></a>
+          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="inc/images/logo2.png" class="avatar" alt="Avatar"> <?php
+echo $_SESSION['username'];
+?> <b class="caret"></b></a>
           <div class="dropdown-menu">
             <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile setting</a></a>
             <a href="#" class="dropdown-item"><i class="fa fa-history"></i> Commands history</a></a>
