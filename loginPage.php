@@ -1,89 +1,88 @@
 <?php
 session_start();
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: crudProduit.php");
-    exit;
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+	echo (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true);
+	header("location: crudProduit.php");
+	exit;
 }
 require_once "DBconnect.php";
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
- 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-    // Check if username is empty
-    if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter username.";
-    } else{
-        $username = trim($_POST["username"]);
-    }
-    
-    // Check if password is empty
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = trim($_POST["password"]);
-    }
-    
-    // Validate credentials
-    if(empty($username_err) && empty($password_err)){
-        // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = :username";
-        
-        if($stmt = $pdo->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Check if username exists, if yes then verify password
-                if($stmt->rowCount() == 1){
-                    if($row = $stmt->fetch()){
-                        $id = $row["id"];
-                        $username = $row["username"];
-                        $Rpassword = $row["password"];
-                        if($password==$Rpassword){
-                            // Password is correct, so start a new session
-                            
-                            
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            if(!empty($_POST["remember"])) {
-								setcookie ("username",$username,time()+ 3600);
-								setcookie ("password",$password,time()+ 3600);
-								
-							} else {
-								setcookie("username","");
-								setcookie("password","");
-								
-							}
-                            // Redirect user to welcome page
-                            header("location: crudProduit.php");
-                        } else{
-                            // Password is not valid, display a generic error message
-                            $login_err = "Invalid username or password.";
-                        }
-                    }
-                } else{
-                    // Username doesn't exist, display a generic error message
-                    $login_err = "Invalid username or password.";
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
 
-            // Close statement
-            unset($stmt);
-        }
-    }
-    
-    // Close connection
-    unset($pdo);
+// Processing form data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+	// Check if username is empty
+	if (empty(trim($_POST["username"]))) {
+		$username_err = "Please enter username.";
+	} else {
+		$username = trim($_POST["username"]);
+	}
+
+	// Check if password is empty
+	if (empty(trim($_POST["password"]))) {
+		$password_err = "Please enter your password.";
+	} else {
+		$password = trim($_POST["password"]);
+	}
+
+	// Validate credentials
+	if (empty($username_err) && empty($password_err)) {
+		// Prepare a select statement
+		$sql = "SELECT id, username, password FROM users WHERE username = :username";
+
+		if ($stmt = $pdo->prepare($sql)) {
+			// Bind variables to the prepared statement as parameters
+			$stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+
+			// Set parameters
+			$param_username = trim($_POST["username"]);
+
+			// Attempt to execute the prepared statement
+			if ($stmt->execute()) {
+				// Check if username exists, if yes then verify password
+				if ($stmt->rowCount() == 1) {
+					if ($row = $stmt->fetch()) {
+						$id = $row["id"];
+						$username = $row["username"];
+						$Rpassword = $row["password"];
+						if ($password == $Rpassword) {
+							// Password is correct, so start a new session
+							
+
+							// Store data in session variables
+							$_SESSION["loggedin"] = true;
+							$_SESSION["id"] = $id;
+							$_SESSION["username"] = $username;
+							if (!empty($_POST["remember"])) {
+								setcookie("username", $username, time() + 3600);
+								setcookie("password", $password, time() + 3600);
+							} else {
+								setcookie("username", "");
+								setcookie("password", "");
+							}
+							// Redirect user to welcome page
+							header("location: crudProduit.php");
+						} else {
+							// Password is not valid, display a generic error message
+							$login_err = "Invalid username or password.";
+						}
+					}
+				} else {
+					// Username doesn't exist, display a generic error message
+					$login_err = "Invalid username or password.";
+				}
+			} else {
+				echo "Oops! Something went wrong. Please try again later.";
+			}
+
+			// Close statement
+			unset($stmt);
+		}
+	}
+
+	// Close connection
+	unset($pdo);
 }
 ?>
 <!DOCTYPE html>
@@ -248,23 +247,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
 			</div>
 			<div class="or-seperator"><b>or</b></div>
-			<?php if (!empty($login_err)){echo '<div class="alert alert-danger">' . $login_err . '</div>';}
-			if(isset($_SESSION['alert'])){echo $_SESSION['alert'];
-			unset($_SESSION['alert']); }?>
+			<?php if (!empty($login_err)) {
+				echo '<div class="alert alert-danger">' . $login_err . '</div>';
+			}
+			if (isset($_SESSION['alert'])) {
+				echo $_SESSION['alert'];
+				unset($_SESSION['alert']);
+			} ?>
 			<div class="form-group">
-				<input type="text" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>" name="username" placeholder="Username" required="required"class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
+				<input type="text" value="<?php if (isset($_COOKIE["username"])) {
+												echo $_COOKIE["username"];
+											} ?>" name="username" placeholder="Username" required="required" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+				<span class="invalid-feedback"><?php echo $username_err; ?></span>
 			</div>
 			<div class="form-group">
-				<input type="password"
-				value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" name="password" placeholder="Password" required="required"class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+				<input type="password" value="<?php if (isset($_COOKIE["password"])) {
+													echo $_COOKIE["password"];
+												} ?>" name="password" placeholder="Password" required="required" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+				<span class="invalid-feedback"><?php echo $password_err; ?></span>
 			</div>
-			
-				<label >
-					<input type="checkbox" name="remember"  > Remember me
-				</label>
-			
+
+			<label>
+				<input type="checkbox" name="remember" checked> Remember me
+			</label>
+
 			<div class="form-group">
 				<button type="submit" class="btn btn-success btn-lg btn-block signin-btn">Sign in</button>
 			</div>
