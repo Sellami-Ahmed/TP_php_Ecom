@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['loggedin'])) {
 	$_SESSION['alert'] = '<div class="alert alert-danger text-center"" role="alert">
 U need to login
@@ -8,9 +9,20 @@ U need to login
 
 	exit;
 }
+
 if (isset($_GET["code"]) && !empty($_GET["code"])) {
 	require_once "DBconnect.php";
-	echo $_GET["code"];
+	$param_code = trim($_GET["code"]);
+	$sql = "SELECT designation FROM produits WHERE code = ".$param_code;
+	$result = $pdo->query($sql);
+	$row = $result->fetch(PDO::FETCH_ASSOC);
+	
+	
+	
+	$file_to_dele="./inc/images/".$row['designation'].".jpg";
+	unlink($file_to_dele);
+	
+
 	$sql = "DELETE FROM produits WHERE code = :code";
 
 	if ($stmt = $pdo->prepare($sql)) {
@@ -84,7 +96,17 @@ function closeForm() {
 
 	</style>
 
-
+<script type="text/javascript">
+	<?php 
+	if (isset($_SESSION["name_use"]) && $_SESSION["name_use"] === true) {
+	echo"
+    window.onload = function () {
+        OpenBootstrapPopup();
+    };"; }?>
+    function OpenBootstrapPopup() {
+        $("#modalADDForm").modal('show');
+    }
+</script>
 
 	<div class="px-4 px-lg-0">
 		<div class="container text-white py-5 text-center">
@@ -101,8 +123,10 @@ function closeForm() {
 									<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
 								</div>
 							</form>
-							<button type="button" class="btn" align='left' style="background-color: #5c6ac4; color:#eeeeee;" data-toggle="modal" data-target="#modalRegisterForm"><i class="fa fa-plus-circle"></i> Add Product</button>
-
+							<form class="form-inline" method="post" action="">
+							<button  type="button" class="btn" align='left' style="background-color: #5c6ac4; color:#eeeeee;"  data-toggle="modal" data-target="#modalADDForm" name="button1"
+                value="Button1"><i class="fa fa-plus-circle"></i> Add Product</button>
+							</form>
 						</div>
 						<div class="table-responsive mt-3" >
 							<table class="table">
@@ -129,7 +153,7 @@ function closeForm() {
 									<?php
 									require_once "DBconnect.php";
 									// read all row from database table
-									$sql = "SELECT * FROM produits Join categories on produits.code_categorie = categories.code";
+									$sql = "SELECT produits.code,produits.designation,produits.Prix,produits.Quantite,categories.name FROM produits JOIN categories on produits.code_categorie = categories.code;";
 
 									$result = $pdo->query($sql);
 									if (!$result) {
@@ -140,7 +164,7 @@ function closeForm() {
 										echo "<tr>
 	<th scope='row'>
 		<div class='p-2'>
-			<img src='inc/images/product-$row[code].jpg' alt='' width='70' class='img-fluid rounded shadow-sm'>
+			<img src='inc/images/$row[designation].jpg' alt='' width='70' class='img-fluid rounded shadow-sm'>
 			<div class='ml-3 d-inline-block align-middle'>
 				<h5 class='mb-0'><a href='#' class='text-dark d-inline-block'>$row[designation]</a></h5><span class='text-muted font-weight-normal font-italic'>Category: $row[name]</br>ID:$row[code]</span>
 			</div>
