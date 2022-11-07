@@ -213,7 +213,7 @@ session_start();
       <div class="navbar-nav ml-auto">
         <a href="#" class="nav-item nav-link messages"><i class="fa fa-shopping-cart"></i><span class="badge">10</span></a></a>
         <div class="nav-item dropdown">
-          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="inc/images/logo2.png" class="avatar" alt="Avatar"> <?php
+          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><i class="fa fa-user"></i>  <?php
 echo $_SESSION['username'];
 ?> <b class="caret"></b></a>
           <div class="dropdown-menu">

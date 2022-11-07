@@ -6,7 +6,7 @@ U need to login
 </div>';
 	header("location: loginPage.php");
 
-exit;
+	exit;
 }
 if (isset($_GET["code"]) && !empty($_GET["code"])) {
 	require_once "DBconnect.php";
@@ -29,7 +29,6 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 	}
 
 	unset($stmt);
-	
 } ?>
 <!doctype html>
 <html lang="en">
@@ -52,22 +51,41 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 
 	<?php
 	include("inc/userHeader.php");
+	include("inc/add.php");
 	?>
+
+
 </head>
 
 <body>
+	<script>
+		function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+} 
+	</script>
 	<style>
 		body {
 			background: #eeeeee;
 			background: -webkit-linear-gradient(to left, #eeeeee, #5c6ac4);
 			background: linear-gradient(to left, #eeeeee, #5c6ac4);
 			min-height: 100vh;
+
 		}
 
-		input[type=number] {
-			max-width: 100px;
-		}
+		
+		
+
+
+
+
 	</style>
+
+
+
 	<div class="px-4 px-lg-0">
 		<div class="container text-white py-5 text-center">
 			<h1 class="display-4">Shopping Cart</h1>
@@ -76,7 +94,17 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
-						<div class="table-responsive">
+						<div class="text-right">
+							<form class="navbar-form form-inline">
+								<div class="input-group search-box">
+									<input type="text" id="search" class="form-control" placeholder="Search by Name">
+									<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+								</div>
+							</form>
+							<button type="button" class="btn" align='left' style="background-color: #5c6ac4; color:#eeeeee;" data-toggle="modal" data-target="#modalRegisterForm"><i class="fa fa-plus-circle"></i> Add Product</button>
+
+						</div>
+						<div class="table-responsive mt-3" >
 							<table class="table">
 								<thead>
 									<tr>
@@ -84,13 +112,16 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 											<div class="p-2 px-3 text-uppercase">Product</div>
 										</th>
 										<th scope="col" class="border-0 bg-light">
-											<div class="py-2 text-uppercase">Price</div>
+											<div class="py-2 text-uppercase" align='center'>Price</div>
 										</th>
 										<th scope="col" class="border-0 bg-light">
-											<div class="py-2 text-uppercase">Quantity</div>
+											<div class="py-2 text-uppercase" align='center'>Quantity</div>
 										</th>
 										<th scope="col" class="border-0 bg-light">
-											<div class="py-2 text-uppercase">Remove</div>
+											<div class="py-2 text-uppercase" align='center'>Edit</div>
+										</th>
+										<th scope="col" class="border-0 bg-light">
+											<div class="py-2 text-uppercase" align='center'>Remove</div>
 										</th>
 									</tr>
 								</thead>
@@ -100,7 +131,7 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 									// read all row from database table
 									$sql = "SELECT * FROM produits Join categories on produits.code_categorie = categories.code";
 
-									$result = $pdo-> query($sql);
+									$result = $pdo->query($sql);
 									if (!$result) {
 										die("Invalid query: " . $pdo->error);
 									}
@@ -115,10 +146,12 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 			</div>
 		</div>
 	</th>
-	<td class='align-middle'><strong>$$row[Prix]</strong></td>
+	<td class='align-middle' align='center'><strong>$$row[Prix]</strong></td>
 	
-	<td class='align-middle'><input type='number' class='form-control text-center' value=$row[Quantite]><strong></strong></td>
-	<td class='align-middle'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-trash'></i></a>
+	<td class='align-middle' align='center'><strong>$row[Quantite]</strong></td>
+	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-edit'></i></a>
+	</td>
+	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-trash'></i></a>
 	</td>
 </tr>";
 									}
@@ -135,7 +168,7 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 						</div>
 					</div>
 				</div>
-				<div class="row py-5 p-4 bg-white rounded shadow-sm">
+				<!-- <div class="row py-5 p-4 bg-white rounded shadow-sm">
 					<div class="col-lg-6">
 						<div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Coupon code</div>
 						<div class="p-4">
@@ -166,11 +199,11 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 								</li>
 							</ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
 						</div>
-					</div>
-				</div>
-
+					</div>-->
 			</div>
+
 		</div>
+	</div>
 	</div>
 </body>
 <footer>
