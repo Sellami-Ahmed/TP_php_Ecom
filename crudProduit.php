@@ -10,7 +10,10 @@ U need to login
 	exit;
 }
 
-if (isset($_GET["code"]) && !empty($_GET["code"])) {
+if (isset($_GET["code"]) && !empty($_GET["code"]) && isset($_GET["event_id"]) && !empty($_GET["event_id"])){
+    if ($_GET["event_id"]==1){
+        
+    
 	require_once "DBconnect.php";
 	$param_code = trim($_GET["code"]);
 	$sql = "SELECT designation FROM produits WHERE code = ".$param_code;
@@ -41,7 +44,7 @@ if (isset($_GET["code"]) && !empty($_GET["code"])) {
 	}
 
 	unset($stmt);
-} ?>
+}} ?>
 <!doctype html>
 <html lang="en">
 
@@ -98,7 +101,7 @@ function closeForm() {
 
 <script type="text/javascript">
 	<?php 
-	if (isset($_SESSION["name_use"]) && $_SESSION["name_use"] === true) {
+	if ((isset($_SESSION["name_use"]) && $_SESSION["name_use"] === true)|| (isset($_SESSION["event"]) && $_SESSION["event"] =="edit")) {
 	echo"
     window.onload = function () {
         OpenBootstrapPopup();
@@ -173,9 +176,9 @@ function closeForm() {
 	<td class='align-middle' align='center'><strong>$$row[Prix]</strong></td>
 	
 	<td class='align-middle' align='center'><strong>$row[Quantite]</strong></td>
-	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-edit'></i></a>
+	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]&event_id=2' class='text-dark'><i class='fa fa-edit'></i></a>
 	</td>
-	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]' class='text-dark'><i class='fa fa-trash'></i></a>
+	<td class='align-middle' align='center'><a href='crudProduit.php?code=$row[code]&event_id=1' class='text-dark'><i class='fa fa-trash'></i></a>
 	</td>
 </tr>";
 									}
