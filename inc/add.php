@@ -118,11 +118,11 @@ move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);}
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold"><?php echo $modalname; ?> </h4>
-                <button  type="button" class="close" data-dismiss="modal" onclick='location.href = "crudProduit.php";' aria-label="Close" >
+                <button  type="button" class="close" data-dismiss="modal" onclick='location.href = "index.php";' aria-label="Close" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="crudProduit.php" method="POST" enctype="multipart/form-data">
+            <form action="index.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body mx-3">
                     <div class="form-group">
                         <label>Product Name:</label>

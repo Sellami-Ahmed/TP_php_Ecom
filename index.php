@@ -36,7 +36,7 @@ if (isset($_GET["code"]) && !empty($_GET["code"]) && isset($_GET["event_id"]) &&
 
 		if ($stmt->execute()) {
 
-			header("location: crudProduit.php");
+			header("location: index.php");
 			exit();
 		} else {
 			echo "Oops! une erreur est survenue.";
