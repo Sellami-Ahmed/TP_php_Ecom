@@ -181,9 +181,7 @@
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light">
     <a href="#" class="navbar-brand"><i class="fa fa-cube"></i><b>Lo7.</b>Tech</a>
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+   
     
       <div class="navbar-nav ml-auto">
         <a href="#" class="nav-item nav-link messages"><i class="fa fa-shopping-cart"></i><span class="badge">10</span></a></a>
