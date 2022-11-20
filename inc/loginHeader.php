@@ -91,12 +91,12 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a href="./crudProduit.php" class="navbar-brand"><i class="fa fa-cube"></i><b>Lo7.</b>Tech</a>
+    <a href="../crudProduit.php" class="navbar-brand"><i class="fa fa-cube"></i><b>Lo7.</b>Tech</a>
 
     </form>
     <div class="navbar-nav action-buttons ml-auto">
-      <a href="#" class="nav-item nav-link dropdown-toggle mr-3">Login</a>
-      <a href="#" class="btn btn-primary">Get Started</a>
+      <a href="./loginPage.php" class="nav-item nav-link dropdown-toggle mr-3">Login</a>
+      <a href="./singupPage.php" class="btn btn-primary">Get Started</a>
     </div>
     </div>
   </nav>

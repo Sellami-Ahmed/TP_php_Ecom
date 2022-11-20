@@ -184,29 +184,7 @@
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- Collection of nav links, forms, and other content for toggling -->
-    <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-      <div class="navbar-nav">
-        <a href="#" class="nav-item nav-link active">Home</a>
-        <a href="#" class="nav-item nav-link">About</a>
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Products</a>
-          <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Computer</a>
-            <a href="#" class="dropdown-item">Laptop</a>
-            <a href="#" class="dropdown-item">Smartphones</a>
-            <a href="#" class="dropdown-item">E-watch</a>
-          </div>
-        </div>
-
-        <a href="#" class="nav-item nav-link">Contact Us</a>
-      </div>
-      <form class="navbar-form form-inline">
-        <div class="input-group search-box">
-          <input type="text" id="search1" class="form-control" placeholder="Search by Name">
-          <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-        </div>
-      </form>
+    
       <div class="navbar-nav ml-auto">
         <a href="#" class="nav-item nav-link messages"><i class="fa fa-shopping-cart"></i><span class="badge">10</span></a></a>
         <div class="nav-item dropdown">
@@ -217,7 +195,7 @@ echo $_SESSION['username'];
             <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile setting</a></a>
             <a href="#" class="dropdown-item"><i class="fa fa-history"></i> Commands history</a></a>
             <div class="dropdown-divider"></div>
-            <a href="logout.php" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></a>
+            <a href="./inc/logout.php" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></a>
           </div>
         </div>
       </div>

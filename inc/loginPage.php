@@ -2,7 +2,7 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	echo (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true);
-	header("location: crudProduit.php");
+	header("location: ../crudProduit.php");
 	exit;
 }
 require_once "DBconnect.php";
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 								setcookie("password", "");
 							}
 							// Redirect user to welcome page
-							header("location: crudProduit.php");
+							header("location:../crudProduit.php");
 						} else {
 							// Password is not valid, display a generic error message
 							$login_err = "Invalid username or password.";
@@ -232,7 +232,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 	</style>
 	<?php
-	include("inc/loginHeader.php");
+	include("loginHeader.php");
 	?>
 </head>
 
@@ -280,7 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	</div>
 	<footer>
 		<?php
-		include("inc/footer.php");
+		include("footer.php");
 		?>
 	</footer>
 </body>

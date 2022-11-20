@@ -244,7 +244,7 @@ Successeful Sign Up
 		}
 	</style>
 	<?php
-	include("inc/loginHeader.php");
+	include("loginHeader.php");
 	?>
 </head>
 
@@ -290,7 +290,7 @@ Successeful Sign Up
 	</div>
 	<footer>
 		<?php
-		include("inc/footer.php");
+		include("footer.php");
 		?>
 	</footer>
 </body>

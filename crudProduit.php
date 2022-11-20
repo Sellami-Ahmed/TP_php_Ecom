@@ -5,7 +5,7 @@ if (!isset($_SESSION['loggedin'])) {
 	$_SESSION['alert'] = '<div class="alert alert-danger text-center"" role="alert">
 U need to login
 </div>';
-	header("location: loginPage.php");
+	header("location: ./inc/loginPage.php");
 
 	exit;
 }
@@ -14,7 +14,7 @@ if (isset($_GET["code"]) && !empty($_GET["code"]) && isset($_GET["event_id"]) &&
     if ($_GET["event_id"]==1){
         
     
-	require_once "DBconnect.php";
+	require_once "./inc/DBconnect.php";
 	$param_code = trim($_GET["code"]);
 	$sql = "SELECT designation FROM produits WHERE code = ".$param_code;
 	$result = $pdo->query($sql);
@@ -128,7 +128,7 @@ function closeForm() {
 
 	<div class="px-4 px-lg-0">
 		<div class="container text-white py-5 text-center">
-			<h1 class="display-4">Shopping Cart</h1>
+			<h1 class="display-4">Stock</h1>
 		</div>
 		<div class="pb-5">
 			<div class="container">
@@ -169,7 +169,7 @@ function closeForm() {
 								</thead>
 								<tbody id="output">
 									<?php
-									require_once "DBconnect.php";
+									require_once "./inc/DBconnect.php";
 									// read all row from database table
 									$sql = "SELECT produits.code,produits.designation,produits.Prix,produits.Quantite,categories.name FROM produits JOIN categories on produits.code_categorie = categories.code;";
 
