@@ -98,7 +98,22 @@ function closeForm() {
 
 
 	</style>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#search").keyup(function(){
+      $.ajax({
+        type:'POST',
+        url:'inc/search.php',
+        data:{
+          name:$("#search").val(),
+        },
+        success:function(data){
+          $("#output").html(data);
+        }
+      });
+    });
+  });
+</script>
 <script type="text/javascript">
 	<?php 
 	if ((isset($_SESSION["name_use"]) && $_SESSION["name_use"] === true)|| (isset($_SESSION["event"]) && $_SESSION["event"] =="edit")) {
@@ -152,7 +167,7 @@ function closeForm() {
 										</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="output">
 									<?php
 									require_once "DBconnect.php";
 									// read all row from database table

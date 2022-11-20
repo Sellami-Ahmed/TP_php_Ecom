@@ -203,7 +203,7 @@
       </div>
       <form class="navbar-form form-inline">
         <div class="input-group search-box">
-          <input type="text" id="search" class="form-control" placeholder="Search by Name">
+          <input type="text" id="search1" class="form-control" placeholder="Search by Name">
           <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
         </div>
       </form>

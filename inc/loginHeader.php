@@ -91,7 +91,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a href="#" class="navbar-brand"><i class="fa fa-cube"></i><b>Lo7.</b>Tech</a>
+    <a href="./crudProduit.php" class="navbar-brand"><i class="fa fa-cube"></i><b>Lo7.</b>Tech</a>
 
     </form>
     <div class="navbar-nav action-buttons ml-auto">
